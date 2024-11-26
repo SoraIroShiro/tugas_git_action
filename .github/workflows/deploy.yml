@@ -21,8 +21,8 @@ jobs:
 
     - name: Build and push Docker image
       run: |
-        docker build -t username/static-web-nginx:latest .
-        docker push username/static-web-nginx:latest
+        docker build -t username/tugas_git_action-web:1.0.0 .
+        docker push username/tugas_git_action-web:1.0.0
 
     - name: Deploy with Docker Compose
       run: |

@@ -54,11 +54,11 @@ jobs:
           docker pull fiqifahrudilah/tugas_git_action-web:1.0.0
           
           # Unduh file docker-compose.yml dari GitHub
-          curl -L https://raw.githubusercontent.com/SoraIroShiro/tugas_git_action/main/docker-compose.yml
+          curl -O https://raw.githubusercontent.com/SoraIroShiro/tugas_git_action/main/docker-compose.yml
           
           # Pastikan Anda berada di direktori yang benar
           # Misalnya, pindah ke direktori project Anda
-          cd /home/ubuntu/tugas_git_action || exit 1
+          cd /home/ubuntu/ || exit 1
           
           # Jalankan docker-compose
           docker-compose down || true

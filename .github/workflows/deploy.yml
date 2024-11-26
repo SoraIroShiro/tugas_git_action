@@ -28,42 +28,55 @@ jobs:
         sudo chmod +x /usr/local/bin/docker-compose
         docker-compose --version
 
-    # Step 4: Build dan push image ke Docker Hub
+    # Step 4: Build and push Docker image to Docker Hub
     - name: Build and push Docker image
       run: |
         docker build -t fiqifahrudilah/tugas_git_action-web:1.0.0 .
         docker push fiqifahrudilah/tugas_git_action-web:1.0.0
 
-    # Step 5: Deploy ke EC2 dengan SSH
+    # Step 5: Deploy to EC2 via SSH
     - name: Deploy to EC2
       env:
         EC2_HOST: ${{ secrets.EC2_HOST }}
         EC2_USER: ${{ secrets.EC2_USER }}
         EC2_KEY: ${{ secrets.EC2_KEY }}
       run: |
-        # Simpan private key ke file sementara
+        # Save private key to a temporary file
         echo "$EC2_KEY" > ec2-key.pem
         chmod 600 ec2-key.pem
 
-        # SSH ke EC2 dan jalankan perintah Docker Compose
+        # SSH into EC2 and run Docker commands
         ssh -o StrictHostKeyChecking=no -i ec2-key.pem $EC2_USER@$EC2_HOST << EOF
-          # Login ke Docker Hub
+          # Login to Docker Hub
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
           
-          # Tarik image terbaru dari Docker Hub
+          # Pull the latest Docker image
           docker pull fiqifahrudilah/tugas_git_action-web:1.0.0
           
-          # Unduh file docker-compose.yml dari GitHub
+          # Clone the repository to get the latest docker-compose.yml
+          git clone https://github.com/SoraIroShiro/tugas_git_action.git /home/ubuntu/tugas_git_action
+
+          # Change to project directory
+          cd /home/ubuntu/tugas_git_action || exit 1
+          
+          # Install Nginx
+          sudo apt update
+          sudo apt install -y nginx
+
+          # Start Nginx service
+          sudo systemctl start nginx
+          sudo systemctl enable nginx
+
+          # Ensure Nginx is running and accessible
+          sudo systemctl status nginx
+
+          # Download docker-compose.yml file from the GitHub repository
           curl -O https://raw.githubusercontent.com/SoraIroShiro/tugas_git_action/main/docker-compose.yml
           
-          # Pastikan Anda berada di direktori yang benar
-          # Misalnya, pindah ke direktori project Anda
-          cd /home/ubuntu/ || exit 1
-          
-          # Jalankan docker-compose
+          # Run Docker Compose
           docker-compose down || true
           docker-compose up -d
         EOF
 
-        # Hapus file private key setelah selesai
+        # Clean up private key after deployment
         rm -f ec2-key.pem

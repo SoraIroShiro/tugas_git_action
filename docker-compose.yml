@@ -1,7 +1,8 @@
 version: "3.9"
 services:
   web:
-    build: .
+    image: fiqifahrudilah/tugas_git_action-web:1.0.0
     ports:
-      - "80:80"
-    container_name: tugas_git_action-web
+      - "80:80"  # Pastikan port 80 terbuka agar Nginx dapat menerima traffic
+    volumes:
+      - ./html:/usr/share/nginx/html  # Mengaitkan file statis HTML

@@ -28,7 +28,7 @@ jobs:
         sudo chmod +x /usr/local/bin/docker-compose
         docker-compose --version
 
-    # Step 4: Set up Docker permissions to allow access to Docker daemon
+    # Step 4: Set up Docker permissions (access to Docker daemon)
     - name: Set up Docker permissions
       run: |
         sudo usermod -aG docker $USER
@@ -60,7 +60,7 @@ jobs:
           docker pull fiqifahrudilah/tugas_git_action-web:1.0.0
           
           # Pindah ke direktori yang berisi docker-compose.yml
-          cd / # Ganti dengan direktori yang sesuai
+          cd /path/to/your/docker-compose-directory # Ganti dengan path yang sesuai
 
           # Hentikan dan hapus container lama jika ada
           docker-compose down || true

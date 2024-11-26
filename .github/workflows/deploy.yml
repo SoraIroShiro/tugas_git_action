@@ -60,13 +60,13 @@ jobs:
           sudo docker pull fiqifahrudilah/tugas_git_action-web:1.0.0
           
           # Pindah ke direktori yang berisi docker-compose.yml
-          sudo cd /home/ubuntu/TUGAS_GIT_ACTION # Ganti dengan path yang sesuai
+          cd /home/ubuntu/TUGAS_GIT_ACTION # Ganti dengan path yang sesuai
 
           # Hentikan dan hapus container lama jika ada
-          docker-compose down || true
+          sudo docker-compose down || true
           
           # Jalankan container baru
-          docker-compose up -d
+          sudo docker-compose up -d
         EOF
 
         # Hapus file private key setelah selesai

@@ -3,5 +3,5 @@ services:
   web:
     build: .
     ports:
-      - "8080:80"
-    container_name: static-web-nginx
+      - "80:80"
+    container_name: tugas_git_action-web

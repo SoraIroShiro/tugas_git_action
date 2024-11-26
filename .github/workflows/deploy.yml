@@ -54,19 +54,18 @@ jobs:
         # SSH ke EC2 dan jalankan perintah Docker Compose
         ssh -o StrictHostKeyChecking=no -i ec2-key.pem $EC2_USER@$EC2_HOST << EOF
           # Login ke Docker Hub
-          sudo docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
           
           # Tarik image terbaru dari Docker Hub
-          sudo docker pull fiqifahrudilah/tugas_git_action-web:1.0.0
+          docker pull fiqifahrudilah/tugas_git_action-web:1.0.0
           
           # Pindah ke direktori yang berisi docker-compose.yml
-          cd /home/ubuntu/TUGAS_GIT_ACTION # Ganti dengan path yang sesuai
-
-          # Hentikan dan hapus container lama jika ada
-          sudo docker-compose down || true
+          # Gantilah path ini dengan path absolut ke folder TUGAS_GIT_ACTION di EC2
+          cd /home/ubuntu/tugas_git_action-web:1.0.0 || exit 1
           
-          # Jalankan container baru
-          sudo docker-compose up -d
+          # Jalankan docker-compose
+          docker-compose down || true
+          docker-compose up -d
         EOF
 
         # Hapus file private key setelah selesai

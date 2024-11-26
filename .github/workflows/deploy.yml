@@ -60,7 +60,7 @@ jobs:
           docker pull fiqifahrudilah/tugas_git_action-web:1.0.0
           
           # Pindah ke direktori yang berisi docker-compose.yml
-          cd /docker-compose.yml # Ganti dengan direktori yang sesuai
+          cd / # Ganti dengan direktori yang sesuai
 
           # Hentikan dan hapus container lama jika ada
           docker-compose down || true

@@ -63,10 +63,6 @@ jobs:
           sudo apt update
           sudo apt install -y nginx
 
-          # Start Nginx service
-          sudo systemctl start nginx
-          sudo systemctl enable nginx
-
           # Ensure Nginx is running and accessible
           sudo systemctl status nginx
 
@@ -76,6 +72,10 @@ jobs:
           # Run Docker Compose
           docker-compose down || true
           docker-compose up -d
+
+          # Start Nginx service
+          sudo systemctl start nginx
+          sudo systemctl enable nginx
         EOF
 
         # Clean up private key after deployment

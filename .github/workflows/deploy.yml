@@ -59,6 +59,7 @@ jobs:
           # Install Nginx
           sudo apt update
           sudo apt install -y nginx
+          sudo systemctl stop nginx
 
           # Change to project directory
           cd /home/ubuntu/tugas_git_action || exit 1

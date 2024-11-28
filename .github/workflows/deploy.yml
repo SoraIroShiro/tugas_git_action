@@ -56,12 +56,13 @@ jobs:
           # Clone the repository to get the latest docker-compose.yml
           git clone https://github.com/SoraIroShiro/tugas_git_action.git /home/ubuntu/tugas_git_action
 
-          # Change to project directory
-          cd /home/ubuntu/tugas_git_action || exit 1
-          
           # Install Nginx
           sudo apt update
           sudo apt install -y nginx
+
+          # Change to project directory
+          cd /home/ubuntu/tugas_git_action || exit 1
+          
 
           # Ensure Nginx is running and accessible
           sudo systemctl status nginx
